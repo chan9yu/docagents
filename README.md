@@ -1,4 +1,4 @@
-# dotagents
+# docagents
 
 여러 AI 코딩 에이전트가 공유하는 스킬·룰 저장소
 
@@ -42,7 +42,7 @@ Claude Code, Cursor, Codex 등 각 에이전트의 설정 디렉토리는 이곳
 ### 1. 저장소 클론
 
 ```bash
-git clone https://github.com/<username>/dotagents.git ~/.agents
+git clone https://github.com/chan9yu/docagents.git ~/.agents
 ```
 
 ### 2. 에이전트 디렉토리에 링크

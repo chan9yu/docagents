@@ -75,6 +75,25 @@
       "skillFolderHash": "71e2869328b2851f275ba19ac7e5b8d7260e3069",
       "installedAt": "2026-07-27T01:05:55.787Z",
       "updatedAt": "2026-07-27T01:05:55.787Z"
+    },
+    "skill-creator": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/skill-creator/SKILL.md",
+      "skillFolderHash": "3cf9a8db32597ba3e24b584a3d696f4e11c7d7b6",
+      "pluginName": "example-skills",
+      "installedAt": "2026-07-27T01:21:05.599Z",
+      "updatedAt": "2026-07-27T01:21:27.575Z"
+    },
+    "playwright-skill": {
+      "source": "lackeyjb/playwright-skill",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/lackeyjb/playwright-skill.git",
+      "skillPath": "skills/playwright-skill/SKILL.md",
+      "skillFolderHash": "b2d559b68b4c3004840124862f30c6d371270646",
+      "installedAt": "2026-07-27T01:22:18.112Z",
+      "updatedAt": "2026-07-27T01:22:18.112Z"
     }
   },
   "dismissed": {

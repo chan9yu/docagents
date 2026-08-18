@@ -119,6 +119,15 @@
       "skillFolderHash": "ee3a35c76f875ea6ebaf68947af13ba6346b13f2",
       "installedAt": "2026-08-11T02:00:49.682Z",
       "updatedAt": "2026-08-18T08:01:45.562Z"
+    },
+    "grilling": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "skillPath": "skills/productivity/grilling/SKILL.md",
+      "skillFolderHash": "0d40d978f1a588971a11ea7ae85b208e78102dc3",
+      "installedAt": "2026-08-18T10:38:59.471Z",
+      "updatedAt": "2026-08-18T10:38:59.471Z"
     }
   },
   "dismissed": {

@@ -6,9 +6,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/vercel-labs/skills.git",
       "skillPath": "skills/find-skills/SKILL.md",
-      "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
+      "skillFolderHash": "76a98a285cb0434f3d39e1a873823556330e398b",
       "installedAt": "2026-05-06T01:39:48.225Z",
-      "updatedAt": "2026-05-06T01:39:48.225Z"
+      "updatedAt": "2026-08-18T08:01:29.384Z"
     },
     "karpathy-guidelines": {
       "source": "forrestchang/andrej-karpathy-skills",
@@ -25,28 +25,27 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/juliusbrussee/caveman.git",
       "skillPath": "skills/caveman/SKILL.md",
-      "skillFolderHash": "166040c027f7764d43df36abc5df0079bfc6394b",
+      "skillFolderHash": "bdf0c87a2bdd47fc7fe9008c40cc6491ee801b81",
       "installedAt": "2026-07-27T01:04:03.810Z",
-      "updatedAt": "2026-07-27T01:04:03.810Z"
+      "updatedAt": "2026-08-18T08:01:31.513Z"
     },
     "ui-ux-pro-max": {
       "source": "nextlevelbuilder/ui-ux-pro-max-skill",
       "sourceType": "github",
       "sourceUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git",
       "skillPath": ".claude/skills/ui-ux-pro-max/SKILL.md",
-      "skillFolderHash": "e36b015761c3bd5e2b6977323db9b105b4cd8d5f",
+      "skillFolderHash": "5cca2c41be4f7a85c3d8ff95e9bd42de9486745e",
       "installedAt": "2026-07-27T01:04:41.765Z",
-      "updatedAt": "2026-07-27T01:04:41.765Z"
+      "updatedAt": "2026-08-18T08:01:33.419Z"
     },
     "handoff": {
       "source": "mattpocock/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/mattpocock/skills.git",
       "skillPath": "skills/productivity/handoff/SKILL.md",
-      "skillFolderHash": "184d485ae68a2132893a94239b2b85d253e6152b",
-      "pluginName": "mattpocock-skills",
+      "skillFolderHash": "2242e8f05424b8c2ae94194a90d97b88d16108ec",
       "installedAt": "2026-07-27T01:05:00.634Z",
-      "updatedAt": "2026-07-27T01:05:00.634Z"
+      "updatedAt": "2026-08-18T08:01:34.817Z"
     },
     "code-review-skill": {
       "source": "awesome-skills/code-review-skill",
@@ -62,10 +61,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/mattpocock/skills.git",
       "skillPath": "skills/productivity/grill-me/SKILL.md",
-      "skillFolderHash": "c817f6f36acd483294144694a935a76d3e3eb101",
-      "pluginName": "mattpocock-skills",
+      "skillFolderHash": "3df14e2d3a89459bf300614be9247e3ce74798f8",
       "installedAt": "2026-07-27T01:05:38.065Z",
-      "updatedAt": "2026-07-27T01:05:38.065Z"
+      "updatedAt": "2026-08-18T08:01:36.278Z"
     },
     "context-mode": {
       "source": "mksglu/context-mode",
@@ -91,9 +89,18 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/lackeyjb/playwright-skill.git",
       "skillPath": "skills/playwright-skill/SKILL.md",
-      "skillFolderHash": "b2d559b68b4c3004840124862f30c6d371270646",
+      "skillFolderHash": "fdda6a87b3d8b51eb463164dc481ede49774a0d6",
       "installedAt": "2026-07-27T01:22:18.112Z",
-      "updatedAt": "2026-07-27T01:22:18.112Z"
+      "updatedAt": "2026-08-18T08:01:38.077Z"
+    },
+    "orchestration": {
+      "source": "stablyai/orca",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/stablyai/orca.git",
+      "skillPath": "skills/orchestration/SKILL.md",
+      "skillFolderHash": "9aa26fde93c0592e5983cdca1ccd33b402802255",
+      "installedAt": "2026-08-11T01:30:18.120Z",
+      "updatedAt": "2026-08-11T01:30:18.120Z"
     },
     "computer-use": {
       "source": "stablyai/orca",
@@ -112,15 +119,6 @@
       "skillFolderHash": "ee3a35c76f875ea6ebaf68947af13ba6346b13f2",
       "installedAt": "2026-08-11T02:00:49.682Z",
       "updatedAt": "2026-08-18T08:01:45.562Z"
-    },
-    "orchestration": {
-      "source": "stablyai/orca",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/stablyai/orca.git",
-      "skillPath": "skills/orchestration/SKILL.md",
-      "skillFolderHash": "9aa26fde93c0592e5983cdca1ccd33b402802255",
-      "installedAt": "2026-08-11T01:30:18.120Z",
-      "updatedAt": "2026-08-11T01:30:18.120Z"
     }
   },
   "dismissed": {

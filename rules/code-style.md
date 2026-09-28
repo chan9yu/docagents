@@ -17,53 +17,19 @@ const { userId, roomId, role } = params;
 const adapter = this.createAdapter();
 ```
 
-## return과 빈 줄
+## 한 줄 블록
 
-return 앞 빈 줄은 문맥으로 판단하지 않고 줄 수로 정한다. 누가 써도 같은 모양이 나온다.
-
-- **return을 담은 블록이 빈 줄을 빼고 3줄 이하면 return 앞에 빈 줄을 두지 않는다.** return 줄도 센다. 3줄을 넘으면 빈 줄을 둔다. return이 블록의 첫 문장이면 두지 않는다
-- **JSX를 돌려주는 return 앞에는 블록 길이와 상관없이 빈 줄을 둔다.** 컴포넌트에서 값을 준비하는 부분과 그리는 부분이 갈려 보인다. 첫 문장이면 두지 않는다
-- **블록이 닫힌 뒤 다음 문장 앞에는 빈 줄을 둔다.** 이어지는 `if` 둘 사이도 같다. `else`와 `catch`, `finally`처럼 같은 문장이 이어지면 두지 않는다
-
-```tsx
-export function buildLoginPath(next: string) {
-	const safePath = sanitizeNextPath(next) ?? DEFAULT_NEXT_PATH;
-	return `/login?next=${encodeURIComponent(safePath)}`;
-}
-
-export default async function LoginPage({ searchParams }: PageProps) {
-	const { next } = await searchParams;
-	const requestedNext = typeof next === 'string' ? next : null;
-
-	return <LoginScreen next={sanitizeNextPath(requestedNext)} />;
-}
-
-function hasErrorMessageShape(error: unknown) {
-	if (typeof error !== 'object' || error === null) {
-		return false;
-	}
-
-	const { errorCode, message } = error as Record<string, unknown>;
-
-	return typeof errorCode === 'string' && typeof message === 'string';
-}
-```
-
-## 한 줄 블록 금지
-
-`if`와 `for`의 본문은 중괄호로 감싸고 줄을 나눈다. 한 줄에 붙이면 조건과 실행이 한 덩어리로 보여 분기를 놓친다.
+저장소가 eslint `curly`를 켰으면 `if`와 `for`의 본문을 중괄호로 감싸고 줄을 나눈다. 켜지 않은 저장소에서는 같은 파일의 모양을 따른다.
 
 ```typescript
-// 틀림
+// curly가 막는 모양
 if (!storageKey) return LEVELS[defaultLevel];
 
-// 올바름
+// curly를 통과하는 모양
 if (!storageKey) {
 	return LEVELS[defaultLevel];
 }
 ```
-
-eslint `curly: ['error', 'all']`로 강제할 수 있다.
 
 ## return의 객체 리터럴
 
@@ -169,4 +135,4 @@ logger.warn('reconnect attempt', { attempt, maxAttempts });
 
 ## 주석
 
-기본은 주석 0이다. 상세는 `comments.md`가 정한다.
+기본은 주석 0이다. 상세는 `~/.agents/rules/comments.md`가 정한다.

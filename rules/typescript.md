@@ -1,5 +1,5 @@
 ---
-description: TypeScript 작성 규칙. 타입 안전성, 네이밍, 클래스 구조
+description: TypeScript 작성 규칙. 타입 안전성, 반환 타입, 네이밍, enum 대신 as const
 paths: ['**/*.ts', '**/*.tsx', '**/*.mts']
 ---
 
@@ -13,23 +13,23 @@ paths: ['**/*.ts', '**/*.tsx', '**/*.mts']
 
 ## import
 
-타입으로만 쓰는 대상은 `import type`으로 명시한다. enum과 클래스처럼 런타임 값으로도 쓰이는 대상은 일반 `import`를 쓴다.
+타입으로만 쓰는 대상은 `import type`으로 명시한다. 클래스나 `as const` 객체처럼 런타임 값으로도 쓰이는 대상은 일반 `import`를 쓴다.
 
 ```typescript
-// 틀림. enum을 import type으로 가져오면 런타임에 사라진다
-import type { ConnectionState } from './types';
+// 틀림. import type으로 가져온 클래스는 new로 만들 수 없다
+import type { Client } from './client';
 
 // 올바름
-import { ConnectionState } from './types';
+import { Client } from './client';
 import type { ClientOptions } from './types';
 ```
 
 ## 타입 안전성
 
 - `any` 금지 (ESLint `no-explicit-any` error). 타입을 알 수 없는 경계에서는 `unknown`과 타입 가드로 좁힌다
-- `!` non-null assertion 금지 (ESLint `no-non-null-assertion` error). 타입 가드로 좁힌다. 값이 없을 수 있다는 것이 계약이면 optional chaining을 쓰되 `?? ''` 같은 기본값으로 덮지 않는다
+- `!` non-null assertion 금지 (ESLint `no-non-null-assertion` error). 타입 가드로 좁힌다. 값이 없을 수 있다는 것이 계약이면 optional chaining을 쓴다
 - `as` 단언은 최소화한다. discriminated union과 타입 가드를 먼저 고려한다. 런타임 검증 직후처럼 값을 이미 확인한 자리에서만 허용한다
-- 미사용 변수는 `_` prefix로만 허용한다
+- `_` prefix는 미사용 변수와 파라미터에만 쓴다(`_roomId: string`). getter와 이름이 겹치는 필드는 `currentState`처럼 뜻이 드러나는 다른 이름을 준다
 
 ### 반환 타입
 
@@ -52,13 +52,13 @@ withTag(tag: string): /*elided*/ any;
 
 ### 파일
 
-저장소 룰에 파일 이름 규칙이 있으면 그것을 따른다. 없을 때의 기본은 이렇다. 역할 접미사가 붙는 도메인 파일은 `{feature}.{role}.ts` 형태로 점 구분한다: `interview.session.ts`, `transport.adapter.ts`, `recording.engine.ts`. 단일 관심사면 단순 이름을 쓴다: `client.ts`, `validation.ts`, `constants.ts`. 이름이 두 단어를 넘으면 하이픈으로 잇는다: `peer-link.ts`, `data-channel.ts`. 대문자와 밑줄은 파일명에 쓰지 않는다.
+저장소 룰에 파일 이름 규칙이 있으면 그것을 따른다. 없으면 같은 폴더에 있는 파일의 형식을 따른다.
 
 ### 식별자
 
 | 대상             | 규칙                        |
 | ---------------- | --------------------------- |
-| 클래스           | PascalCase + 역할 접미사    |
+| 클래스           | PascalCase                  |
 | 메서드, 프로퍼티 | camelCase                   |
 | 상수             | UPPER_SNAKE_CASE            |
 | 인터페이스       | PascalCase, `I` 접두사 금지 |
@@ -101,43 +101,6 @@ withTag(tag: string): /*elided*/ any;
 접두사를 따르지 않는 자리가 셋 있다. DOM과 ARIA 표준 속성을 그대로 받는 이름(`disabled`, `checked`, `open`), 라이브러리가 이름을 정한 옵션 키(TanStack Query의 `retry`), 외부 SDK의 타입 선언이다. 이 셋은 원본의 이름을 따른다.
 
 boolean이 아닌 값에 형용사만 붙이지 않는다. 배열을 `visible`이라 부르면 참거짓으로 읽힌다. `visiblePopups`로 적는다.
-
-### 클래스 접미사
-
-| 접미사     | 용도                       |
-| ---------- | -------------------------- |
-| `Adapter`  | 외부 서비스 격리           |
-| `Client`   | 외부 시스템 호출 주체      |
-| `Session`  | 수명이 있는 상태 보유 객체 |
-| `Bus`      | 메시지 라우팅              |
-| `Engine`   | 복잡한 워크플로 실행 주체  |
-| `Policy`   | 규칙과 전략                |
-| `Provider` | 토큰과 리소스 공급         |
-| `Resolver` | 조회와 매핑                |
-| `Pipeline` | 처리 체인                  |
-
-이벤트 발행에는 별도 접미사를 두지 않는다. 이벤트 전달만 하는 얇은 래퍼를 만들지 말고 도메인 클래스가 이미터를 직접 상속한다.
-
-## 클래스 구조
-
-멤버 순서는 ESLint `member-ordering`으로 강제한다: static 필드, static 메서드, instance 필드, constructor, instance 메서드. 각 그룹 안에서 public, protected, private 순이다.
-
-접근 제어자를 명시하는 규칙(`explicit-member-accessibility`)을 켰다면 constructor 파라미터 프로퍼티에도 붙인다. constructor와 accessor에서는 `public`을 적으면 오히려 오류다. 생략해도 되는 것이 아니라 `public`만 지우고 `private`와 `protected`는 그대로 적는다.
-
-```typescript
-export class Client {
-	private readonly config: ClientConfig;
-	private readonly logger: Logger;
-
-	constructor(config: ClientConfig) { ... }
-
-	public async connect(params: ConnectParams): Promise<Session> { ... }
-}
-```
-
-내부 상태에는 `private` 키워드를 쓴다. ECMAScript private field(`#`)는 쓰지 않는다. `#`에는 접근 제어자를 붙일 수 없어(TS18010) 명시 규칙과 공존하지 못한다. `private`는 컴파일 타임 보호라 번들에서는 일반 속성이 된다. 런타임 은닉이 실제 요구사항이면 그때 `#`를 검토한다.
-
-`_` prefix는 쓰지 않는다. getter와 이름이 겹치는 백킹 필드는 `currentState`처럼 의미가 드러나는 다른 이름을 준다. 예외는 미사용 변수와 파라미터다(`_roomId: string`).
 
 ## enum
 

@@ -9,7 +9,7 @@ Claude Code, Cursor, Codex 등 각 에이전트의 설정 디렉토리는 이곳
 
 ```
 .agents/
-├── skills/              # 에이전트 스킬 (13개)
+├── skills/              # 에이전트 스킬 (14개)
 ├── rules/               # 언어와 도메인별 코딩 규칙 (11개)
 ├── scripts/
 │   └── link-agents.sh   # 설정 디렉토리에 링크 생성
@@ -36,6 +36,7 @@ Claude Code, Cursor, Codex 등 각 에이전트의 설정 디렉토리는 이곳
 | `orchestration`        | 멀티 에이전트 조율. 태스크 디스패치와 감독 루프            | 설치   |
 | `playwright-skill`     | 브라우저 자동화와 테스트                                   | 설치   |
 | `radio-system-design`  | 코드 작성 전 프론트엔드 기능을 RADIO 5단계로 설계          | 직접   |
+| `to-m4a`               | 녹화 영상에서 음성만 뽑아 클로바노트용 m4a로 변환          | 직접   |
 | `ui-ux-pro-max`        | UI/UX 디자인 DB (스타일, 팔레트, 타이포그래피)             | 설치   |
 
 스킬 생성은 claude.ai에서 동기화되는 `anthropic-skills:skill-creator`를 쓴다.
@@ -52,9 +53,9 @@ Claude Code, Cursor, Codex 등 각 에이전트의 설정 디렉토리는 이곳
 | `comments.md`      | 총량이 먼저다. 타입 선언 안과 선언부에 쓰고 본문에는 안 쓴다 |
 | `git-baseline.md`  | 커밋 분할, 강제 푸시, 금지 패턴, 포맷터 훅의 MM 함정        |
 | `no-fallback.md`   | 오류를 빈 값이나 기본값으로 감추는 코드와 임시 우회 금지    |
-| `react.md`         | props는 interface, 핸들러와 이벤트 props, 훅의 이름         |
+| `react.md`         | 이벤트 핸들러와 이벤트 props, 훅의 이름                     |
 | `testing.md`       | TDD 원칙, mock 정책, flaky 처리, 금지 패턴                  |
-| `typescript.md`    | 타입 안전성, 네이밍과 동사 선택, 클래스 구조, enum 대신 as const |
+| `typescript.md`    | 타입 안전성, 반환 타입, 네이밍과 동사 선택, enum 대신 as const |
 | `korean-writing.md`| 기호와 한자, 금지 표현 목록, 번역 은유, 비유 기준 |
 | `korean-writing-review.md` | 고칠 때 생기는 새 위반, 넣지 않는 것, 검사 명령과 정규식 함정 |
 

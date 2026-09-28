@@ -9,8 +9,8 @@ Claude Code, Cursor, Codex 등 각 에이전트의 설정 디렉토리는 이곳
 
 ```
 .agents/
-├── skills/              # 에이전트 스킬 (15개)
-├── rules/               # 언어와 도메인별 코딩 규칙 (7개)
+├── skills/              # 에이전트 스킬 (13개)
+├── rules/               # 언어와 도메인별 코딩 규칙 (11개)
 ├── scripts/
 │   └── link-agents.sh   # 설정 디렉토리에 링크 생성
 └── .skill-lock.json     # 스킬 설치 출처와 버전 해시 추적
@@ -24,21 +24,21 @@ Claude Code, Cursor, Codex 등 각 에이전트의 설정 디렉토리는 이곳
 
 | 스킬                   | 용도                                                       | 출처   |
 | ---------------------- | ---------------------------------------------------------- | ------ |
-| `caveman`              | 원시인 말투로 출력 토큰 65% 절감                           | 설치   |
 | `code-review-skill`    | 20개 넘는 언어와 프레임워크의 코드 리뷰 가이드             | 설치   |
 | `computer-use`         | 접근성 트리와 스크린샷으로 데스크톱 앱 창을 읽고 조작      | 설치   |
-| `context-mode`         | 대용량 출력을 서브에이전트로 처리해 컨텍스트 절약          | 설치   |
 | `find-skills`          | 스킬 검색과 설치                                           | 설치   |
 | `frontend-fundamentals`| 가독성과 예측 가능성, 응집도, 결합도로 프론트엔드 코드 진단 | 직접   |
-| `grill-me`             | 계획과 설계를 압박 인터뷰로 검증                           | 설치   |
+| `frontend-sdk-development` | 외부 개발자가 쓰는 프론트엔드 SDK의 공개 API 설계와 개선 | 직접   |
+| `grill-me`             | 계획과 설계를 압박 인터뷰로 검증 (사용자 호출 전용)        | 설치   |
+| `grilling`             | 계획과 결정을 압박 인터뷰로 검증                           | 설치   |
 | `handoff`              | 대화를 인수인계 문서로 압축                                | 설치   |
-| `karpathy-guidelines`  | LLM 코딩 실수(과잉 구현, 광범위 수정) 방지                 | 설치   |
 | `orca-cli`             | Orca 워크트리와 터미널, 내장 브라우저 조작                 | 설치   |
 | `orchestration`        | 멀티 에이전트 조율. 태스크 디스패치와 감독 루프            | 설치   |
 | `playwright-skill`     | 브라우저 자동화와 테스트                                   | 설치   |
 | `radio-system-design`  | 코드 작성 전 프론트엔드 기능을 RADIO 5단계로 설계          | 직접   |
-| `skill-creator`        | 스킬 생성과 개선, 성능 측정                                | 설치   |
 | `ui-ux-pro-max`        | UI/UX 디자인 DB (스타일, 팔레트, 타이포그래피)             | 설치   |
+
+스킬 생성은 claude.ai에서 동기화되는 `anthropic-skills:skill-creator`를 쓴다.
 
 ### rules
 
@@ -47,16 +47,20 @@ Claude Code, Cursor, Codex 등 각 에이전트의 설정 디렉토리는 이곳
 | 룰                 | 내용                                                        |
 | ------------------ | ----------------------------------------------------------- |
 | `autonomy.md`      | 사용자 확인이 필요한 변경, 금지 표현, 99% 확신, 커밋 시점   |
-| `change-process.md`| 구현 전 확인, 게이트 순서, 3회 반복 실패 시 롤백            |
+| `change-baseline.md`| 구현 전 확인, 게이트 순서, 3회 반복 실패 시 롤백            |
 | `code-style.md`    | 근접성과 빈 줄, 매직 넘버, 복잡한 조건, 시간과 식별자 정규화 |
 | `comments.md`      | 총량이 먼저다. 타입 선언 안과 선언부에 쓰고 본문에는 안 쓴다 |
-| `git-workflow.md`  | 커밋 분할, 강제 푸시, 금지 패턴, 포맷터 훅의 MM 함정        |
+| `git-baseline.md`  | 커밋 분할, 강제 푸시, 금지 패턴, 포맷터 훅의 MM 함정        |
+| `no-fallback.md`   | 오류를 빈 값이나 기본값으로 감추는 코드와 임시 우회 금지    |
+| `react.md`         | props는 interface, 핸들러와 이벤트 props, 훅의 이름         |
 | `testing.md`       | TDD 원칙, mock 정책, flaky 처리, 금지 패턴                  |
 | `typescript.md`    | 타입 안전성, 네이밍과 동사 선택, 클래스 구조, enum 대신 as const |
+| `korean-writing.md`| 기호와 한자, 금지 표현 목록, 번역 은유, 비유 기준 |
+| `korean-writing-review.md` | 고칠 때 생기는 새 위반, 넣지 않는 것, 검사 명령과 정규식 함정 |
 
-frontmatter의 `paths` glob으로 적용 대상을 지정한다. `code-style.md`와 `comments.md`, `testing.md`, `typescript.md`가 `paths`를 갖는다. 나머지 셋은 파일 경로와 무관한 규칙이라 `paths`가 없다.
+frontmatter의 `paths` glob으로 적용 대상을 지정한다. `code-style.md`와 `comments.md`, `no-fallback.md`, `react.md`, `testing.md`, `typescript.md`, `korean-writing-review.md`가 `paths`를 갖는다. 나머지 넷은 파일 경로와 무관한 규칙이라 `paths`가 없다. `korean-writing.md`는 코드가 아니라 한국어 텍스트 전부가 대상이라 여기에 든다.
 
-`paths`는 경로 매칭으로 룰을 주입하는 프로젝트 훅이 읽는다. 사용자 설정에 링크된 룰은 `paths`와 무관하게 모든 세션에 로드된다.
+사용자 설정에 링크된 룰도 `paths`를 따른다. `paths`가 없는 룰은 세션마다 실리고 있는 룰은 그 패턴의 파일을 읽을 때 실린다.
 
 ### .skill-lock.json
 

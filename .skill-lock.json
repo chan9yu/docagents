@@ -10,25 +10,6 @@
       "installedAt": "2026-05-06T01:39:48.225Z",
       "updatedAt": "2026-08-18T08:01:29.384Z"
     },
-    "karpathy-guidelines": {
-      "source": "forrestchang/andrej-karpathy-skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/forrestchang/andrej-karpathy-skills.git",
-      "skillPath": "skills/karpathy-guidelines/SKILL.md",
-      "skillFolderHash": "e119339197d600aa39a24fd7a95c946800c9c949",
-      "pluginName": "andrej-karpathy-skills",
-      "installedAt": "2026-07-27T01:02:54.864Z",
-      "updatedAt": "2026-07-27T01:02:54.864Z"
-    },
-    "caveman": {
-      "source": "juliusbrussee/caveman",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/juliusbrussee/caveman.git",
-      "skillPath": "skills/caveman/SKILL.md",
-      "skillFolderHash": "bdf0c87a2bdd47fc7fe9008c40cc6491ee801b81",
-      "installedAt": "2026-07-27T01:04:03.810Z",
-      "updatedAt": "2026-08-18T08:01:31.513Z"
-    },
     "ui-ux-pro-max": {
       "source": "nextlevelbuilder/ui-ux-pro-max-skill",
       "sourceType": "github",
@@ -64,25 +45,6 @@
       "skillFolderHash": "3df14e2d3a89459bf300614be9247e3ce74798f8",
       "installedAt": "2026-07-27T01:05:38.065Z",
       "updatedAt": "2026-08-18T08:01:36.278Z"
-    },
-    "context-mode": {
-      "source": "mksglu/context-mode",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/mksglu/context-mode.git",
-      "skillPath": "skills/context-mode/SKILL.md",
-      "skillFolderHash": "71e2869328b2851f275ba19ac7e5b8d7260e3069",
-      "installedAt": "2026-07-27T01:05:55.787Z",
-      "updatedAt": "2026-07-27T01:05:55.787Z"
-    },
-    "skill-creator": {
-      "source": "anthropics/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/anthropics/skills.git",
-      "skillPath": "skills/skill-creator/SKILL.md",
-      "skillFolderHash": "3cf9a8db32597ba3e24b584a3d696f4e11c7d7b6",
-      "pluginName": "example-skills",
-      "installedAt": "2026-07-27T01:21:05.599Z",
-      "updatedAt": "2026-07-27T01:21:27.575Z"
     },
     "playwright-skill": {
       "source": "lackeyjb/playwright-skill",

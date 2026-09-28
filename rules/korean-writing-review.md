@@ -121,14 +121,16 @@ envelope에는 "안에 무언가를 넣어 봉한다"는 실물이 있지만 "�
 
 ```bash
 grep -rn '—\|·\|→\|↔' --include='*.md' .
-grep -rnP '[\x{1F300}-\x{1FAFF}\x{2705}\x{274C}\x{26A0}]' --include='*.md' .
-grep -rnP '[\x{4E00}-\x{9FFF}]' --include='*.md' .
+find . -name '*.md' -not -path '*/node_modules/*' -print0 | xargs -0 perl -CSD -Mutf8 -ne 'print "$ARGV:$.: $_" if /[\x{1F300}-\x{1FAFF}\x{2705}\x{274C}\x{26A0}]/; close ARGV if eof'
+find . -name '*.md' -not -path '*/node_modules/*' -print0 | xargs -0 perl -CSD -Mutf8 -ne 'print "$ARGV:$.: $_" if /[\x{4E00}-\x{9FFF}]/; close ARGV if eof'
 grep -rn '따라서\|결론적으로\|이를 통해' --include='*.md' .
 grep -rn '전자는\|전자가\|후자는\|후자가' --include='*.md' .
 grep -rn '셈입니다\|셈이에요\|쓸모가 있\|몫이 됩니다\|부작용' --include='*.md' .
 grep -rn '한 벌\|두 벌\|세 벌\|교과서\|정석\|되풀이\|영감을 주\|먹힌다\|효자\|한몫\|갈래\|매달려\|얹혀' --include='*.md' .
-git log --format='%h %s%n%b' | grep -P '[\x{4E00}-\x{9FFF}]'
+git log --format='%h %s%n%b' | perl -CSD -Mutf8 -ne 'print if /[\x{4E00}-\x{9FFF}]/'
 ```
+
+이모지와 한자는 `grep -P` 대신 perl로 찾는다. macOS 기본 grep은 `-P`를 받지 않고 오류로 끝나는데, 종료 코드를 보지 않으면 0건 통과와 구분되지 않는다.
 
 한자는 커밋 메시지에서 새어 나가기 쉬워 검사를 둘로 나눈다. 파일 검사는 저장소를 훑고 로그 검사는 이미 쌓인 메시지를 훑는다.
 

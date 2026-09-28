@@ -19,30 +19,34 @@ const adapter = this.createAdapter();
 
 ## return과 빈 줄
 
-`return` 앞 빈 줄을 기계적으로 강제하지 않는다. 빈 줄은 근접성 규칙 그대로 논리 단위를 가르는 용도로만 쓴다. 기준은 둘이다.
+return 앞 빈 줄은 문맥으로 판단하지 않고 줄 수로 정한다. 누가 써도 같은 모양이 나온다.
 
-- 블록이 닫힌 다음 문장이 `return`이면 빈 줄을 둔다. 검증이나 분기와 반환이 다른 단계라는 것이 드러난다
-- 직전 문장과 `return`이 한 동작이면 붙인다. reject하고 바로 나가는 콜백처럼 반환이 그 문장의 마무리인 자리다
+- **return을 담은 블록이 빈 줄을 빼고 3줄 이하면 return 앞에 빈 줄을 두지 않는다.** return 줄도 센다. 3줄을 넘으면 빈 줄을 둔다. return이 블록의 첫 문장이면 두지 않는다
+- **JSX를 돌려주는 return 앞에는 블록 길이와 상관없이 빈 줄을 둔다.** 컴포넌트에서 값을 준비하는 부분과 그리는 부분이 갈려 보인다. 첫 문장이면 두지 않는다
+- **블록이 닫힌 뒤 다음 문장 앞에는 빈 줄을 둔다.** 이어지는 `if` 둘 사이도 같다. `else`와 `catch`, `finally`처럼 같은 문장이 이어지면 두지 않는다
 
-```typescript
-// 블록 뒤의 return은 가른다
-export function createConnection(options: ConnectionOptions) {
-	if (!isSupported()) {
-		throw new ConnectionError({ code: 'UNSUPPORTED_ENVIRONMENT', message: '...' });
-	}
-
-	return new Connection(resolveOptions(options));
+```tsx
+export function buildLoginPath(next: string) {
+	const safePath = sanitizeNextPath(next) ?? DEFAULT_NEXT_PATH;
+	return `/login?next=${encodeURIComponent(safePath)}`;
 }
 
-// 직전 문장의 마무리인 return은 붙인다
-client.send(payload, (cause) => {
-	if (cause) {
-		reject(error);
-		return;
+export default async function LoginPage({ searchParams }: PageProps) {
+	const { next } = await searchParams;
+	const requestedNext = typeof next === 'string' ? next : null;
+
+	return <LoginScreen next={sanitizeNextPath(requestedNext)} />;
+}
+
+function hasErrorMessageShape(error: unknown) {
+	if (typeof error !== 'object' || error === null) {
+		return false;
 	}
 
-	resolve();
-});
+	const { errorCode, message } = error as Record<string, unknown>;
+
+	return typeof errorCode === 'string' && typeof message === 'string';
+}
 ```
 
 ## 한 줄 블록 금지
@@ -142,7 +146,7 @@ if (canStart) { ... }
 
 ## 로깅
 
-프로덕션 경로에서 `console.*`를 직접 쓰지 않는다. 프로젝트의 로거를 쓴다.
+프로젝트에 로거가 있으면 프로덕션 경로에서 `console.*`를 직접 쓰지 않고 로거를 쓴다. 로거 없이 `console`에 접두사를 붙이는 식으로 저장소가 로그 방식을 정했으면 그것을 따른다.
 
 ```typescript
 // 틀림
@@ -159,7 +163,7 @@ logger.warn('reconnect attempt', { attempt, maxAttempts });
 
 컨텍스트가 다른 곳(다른 창, 다른 프로세스, 외부 이벤트)에서 온 값을 비교할 때는 명시적으로 정규화한다.
 
-- 창을 넘는 시간 비교에는 `Date.now()`를 쓴다. `performance.now()`는 컨텍스트마다 원점이 달라 음수나 거대한 값이 나온다. 같은 창 안의 고해상도 측정에만 쓴다
+- 창을 넘는 시간 비교에는 `Date.now()`를 쓴다. 저장소가 현재 시각 함수를 따로 감싸 두었으면 그 함수를 쓴다. `performance.now()`는 컨텍스트마다 원점이 달라 음수나 거대한 값이 나온다. 같은 창 안의 고해상도 측정에만 쓴다
 - 외부에서 온 식별자는 문자열일 수도 숫자일 수도 있다. 비교 전에 한쪽으로 통일한다
 - 같은 필드명에 다른 의미가 오면(응답의 `ok` 문자열과 대상 id 숫자) `typeof`로 명시 분기하거나 가드 함수로 묶는다
 

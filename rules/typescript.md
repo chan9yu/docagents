@@ -9,7 +9,7 @@ paths: ['**/*.ts', '**/*.tsx', '**/*.mts']
 
 - strict mode 전체 활성화
 - ESM을 기본 모듈 시스템으로 쓴다. 상대 import에 확장자를 붙이지 않는다. `.ts`를 붙이면 타입 검사가 거부한다(`allowImportingTsExtensions` 미사용)
-- path alias를 쓰지 않는다. 상대 경로와 패키지명만
+- path alias는 저장소가 정한 것을 따른다. 정한 것이 없으면 상대 경로와 패키지명만 쓴다
 
 ## import
 
@@ -27,7 +27,7 @@ import type { ClientOptions } from './types';
 ## 타입 안전성
 
 - `any` 금지 (ESLint `no-explicit-any` error). 타입을 알 수 없는 경계에서는 `unknown`과 타입 가드로 좁힌다
-- `!` non-null assertion 금지 (ESLint `no-non-null-assertion` error). optional chaining이나 타입 가드를 쓴다
+- `!` non-null assertion 금지 (ESLint `no-non-null-assertion` error). 타입 가드로 좁힌다. 값이 없을 수 있다는 것이 계약이면 optional chaining을 쓰되 `?? ''` 같은 기본값으로 덮지 않는다
 - `as` 단언은 최소화한다. discriminated union과 타입 가드를 먼저 고려한다. 런타임 검증 직후처럼 값을 이미 확인한 자리에서만 허용한다
 - 미사용 변수는 `_` prefix로만 허용한다
 
@@ -52,7 +52,7 @@ withTag(tag: string): /*elided*/ any;
 
 ### 파일
 
-역할 접미사가 붙는 도메인 파일은 `{feature}.{role}.ts` 형태로 점 구분한다: `interview.session.ts`, `transport.adapter.ts`, `recording.engine.ts`. 단일 관심사면 단순 이름을 쓴다: `client.ts`, `validation.ts`, `constants.ts`. 이름이 두 단어를 넘으면 하이픈으로 잇는다: `peer-link.ts`, `data-channel.ts`. 대문자와 밑줄은 파일명에 쓰지 않는다.
+저장소 룰에 파일 이름 규칙이 있으면 그것을 따른다. 없을 때의 기본은 이렇다. 역할 접미사가 붙는 도메인 파일은 `{feature}.{role}.ts` 형태로 점 구분한다: `interview.session.ts`, `transport.adapter.ts`, `recording.engine.ts`. 단일 관심사면 단순 이름을 쓴다: `client.ts`, `validation.ts`, `constants.ts`. 이름이 두 단어를 넘으면 하이픈으로 잇는다: `peer-link.ts`, `data-channel.ts`. 대문자와 밑줄은 파일명에 쓰지 않는다.
 
 ### 식별자
 
@@ -85,6 +85,22 @@ withTag(tag: string): /*elided*/ any;
 감싸는 대상이 브라우저 API면 그 API의 동사를 따른다. `getUserMedia`를 감싸는 함수는 `getLocalStream`이지 `acquireLocalMedia`가 아니다. 이름이 원본에서 멀어지면 소비자가 무엇을 감싼 것인지 한 번 더 짚어야 한다.
 
 동사만 있고 목적어가 없는 이름도 쓰지 않는다. `bind`와 `remember`, `dispatch`는 무엇을 하는지 말하지 않는다. `bindClientEvents`, `rememberSubscription`, `dispatchToHandlers`로 적는다. 반대로 동사가 없는 이름도 쓰지 않는다. 형용사로 시작하면 boolean을 돌려주는 술어로 읽힌다.
+
+### 접두사는 역할이 정한다
+
+| 무엇                    | 접두사                       | 예                                           |
+| ----------------------- | ---------------------------- | -------------------------------------------- |
+| boolean 변수와 속성     | `is`, `has`, `can`, `should` | `isRetrying`, `hasResultType`, `canRefresh`  |
+| boolean 상태의 세터     | `set` 뒤에 상태 이름 그대로  | `setIsRetrying`                              |
+| 서버에서 받는 함수      | `get`, `fetch`               | `fetchPopups`                                |
+| 만드는 함수             | `create`, `build`, `make`    | `createOAuthState`, `buildLoginPath`         |
+| 모양을 바꾸는 함수      | `to`, `format`               | `toHref`, `formatClusterText`                |
+| 넓은 입력을 좁히는 함수 | `parse`, `sanitize`          | `parseStep`, `sanitizeNextPath`              |
+| 검증해 던지는 함수      | `verify`                     | `verifyOAuthState`                           |
+
+접두사를 따르지 않는 자리가 셋 있다. DOM과 ARIA 표준 속성을 그대로 받는 이름(`disabled`, `checked`, `open`), 라이브러리가 이름을 정한 옵션 키(TanStack Query의 `retry`), 외부 SDK의 타입 선언이다. 이 셋은 원본의 이름을 따른다.
+
+boolean이 아닌 값에 형용사만 붙이지 않는다. 배열을 `visible`이라 부르면 참거짓으로 읽힌다. `visiblePopups`로 적는다.
 
 ### 클래스 접미사
 
@@ -121,7 +137,7 @@ export class Client {
 
 내부 상태에는 `private` 키워드를 쓴다. ECMAScript private field(`#`)는 쓰지 않는다. `#`에는 접근 제어자를 붙일 수 없어(TS18010) 명시 규칙과 공존하지 못한다. `private`는 컴파일 타임 보호라 번들에서는 일반 속성이 된다. 런타임 은닉이 실제 요구사항이면 그때 `#`를 검토한다.
 
-`_` prefix는 쓰지 않는다. getter와 이름이 겹치는 백킹 필드는 `currentState`처럼 의미가 드러나는 다른 이름을 준다. 예외는 미사용 파라미터다(`_roomId: string`).
+`_` prefix는 쓰지 않는다. getter와 이름이 겹치는 백킹 필드는 `currentState`처럼 의미가 드러나는 다른 이름을 준다. 예외는 미사용 변수와 파라미터다(`_roomId: string`).
 
 ## enum
 
